@@ -15,9 +15,12 @@ function Home(props) {
     timeOfTravel:"",
     numberOfTickets:""
    });
+  
+
 
 
    const [bookSummary,setBookSummary] = useState("");
+   // console.log(bookSummary._id)
 
    const handleChange = ev => {
    setBookSeat({
@@ -36,6 +39,7 @@ function Home(props) {
     timeOfTravel:bookSeat.timeOfTravel,
     numberOfTickets:bookSeat.numberOfTickets
    }
+
    // console.log(bookingDetails)
     fetch("https://go-transit-user-api.onrender.com/booking-details/create",{
       method:'POST',
@@ -49,14 +53,15 @@ function Home(props) {
       return res.json();
      })
      .then((data)=>{
-      setBookSummary(data.message)
+      setBookSummary(data.data._id)
      })
      .catch(err=>{
       console.log("not sent",err)
      })
    }
-
-
+   
+   // store to local storage
+    localStorage.setItem("id",bookSummary);
     return (
        <div className='pd-x'>
         <div className='home-wrapper'>
@@ -146,18 +151,22 @@ function Home(props) {
 
         </div>
         <div className='form-footer'>
-          {/* <Link className='link' to ="/signup">   */}
+         <button className='cta-btn'>Submit</button>
+         {
+         bookSummary ?
+          (<Link className='link' to ="/myBookings">  
           <button 
           className='cta-btn
           type="submit"
           '>
             Proceed
          </button>
-         {/* </Link> */}
-            
+         </Link>) :
+          null
+          }
         </div>
        </form>
-       <p style ={{color:"green",paddingBottom:"2rem"}}> {bookSummary} !</p>
+       <p style ={{color:"green",paddingBottom:"2rem"}}> {bookSummary}</p>
 
         </div>
        
