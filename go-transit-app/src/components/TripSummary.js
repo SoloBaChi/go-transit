@@ -1,10 +1,23 @@
-import React from 'react';
+import {React,useState} from 'react';
 import '../styles/TripSummary.css'
 import Available from '../images/Available.png'
 import You from '../images/You.png'
 import Booked from '../images/Booked.png'
 
 function TripSummary(props) {
+      
+    const [bookSummary,setBookSummary] = useState({});
+
+    //fetch from local storage
+    const getBookingId = localStorage.getItem("id");
+    async function getBookSummary(id){
+    const bookSummary = await fetch(`https://go-transit-user-api.onrender.com/booking-details/getbook/${id}`);
+    const res = await bookSummary.json();
+    // console.log(res.data)
+    setBookSummary(res.data)
+    } 
+    getBookSummary(getBookingId)
+
     return (
         <div className='tripSummaryDetails'>
             <div className='seatShow'>
@@ -59,23 +72,23 @@ function TripSummary(props) {
                         <div>
                             <div className='edit'>
                                 <p>FROM:</p>
-                                <p>ENUGU</p>
+                                <p>{bookSummary.travellingFrom}</p>
                             </div>
                             <div className='edit'>
                                 <p>TO:</p>
-                                <p>ABUJA</p>
+                                <p>{bookSummary.travellingTo}</p>
                             </div>
                             <div className='edit'>
                                 <p>DATE:</p>
-                                <p>05 MAY, 2023</p>
+                                <p>{bookSummary.departureDate}</p>
                             </div>
                             <div className='edit'>
                                 <p>TIME:</p>
-                                <p>09:00 AM</p>
+                                <p>{bookSummary.timeOfArrival}</p>
                             </div>
                             <div className='edit'>
                                 <p>NUMBER OF SEATS BOOKED:</p>
-                                <p>01</p>
+                                <p>{bookSummary.numberOfTickets}</p>
                             </div>
                             <div className='edit'>
                                 <p>SEAT NUMBER:</p>
@@ -87,7 +100,7 @@ function TripSummary(props) {
                             </div>
                             <div className='edit'>
                                 <p>DISCOUNT:</p>
-                                <p>00.00</p>
+                                <p>25%</p>
                             </div>
                             <div className='edit'>
                                 <p>TOTAL:</p>
