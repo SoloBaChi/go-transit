@@ -3,6 +3,7 @@ import '../styles/TripSummary.css'
 import Available from '../images/Available.png'
 import You from '../images/You.png'
 import Booked from '../images/Booked.png'
+import {Link} from 'react-router-dom';
 
 function TripSummary(props) {
       
@@ -84,7 +85,7 @@ function TripSummary(props) {
                             </div>
                             <div className='edit'>
                                 <p>TIME:</p>
-                                <p>{bookSummary.timeOfArrival}</p>
+                                <p>{bookSummary.timeOfTravel}</p>
                             </div>
                             <div className='edit'>
                                 <p>NUMBER OF SEATS BOOKED:</p>
@@ -108,8 +109,12 @@ function TripSummary(props) {
                             </div>
                         </div>
                         <div className='btnDiv'>
+                            <Link to="/">
                             <button className='backbtn'>Back</button>
+                            </Link>
+                            <Link to="/signup">
                             <button className='paybtn'>Pay</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
